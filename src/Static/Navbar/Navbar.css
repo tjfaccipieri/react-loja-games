@@ -1,0 +1,31 @@
+.navbar{
+  width: 100vw;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-around;
+  color: #fff
+}
+
+.fundoPreto {
+  background-color: #151313 ;
+}
+
+.blue {
+  background-color: #1a2cd3 
+}
+
+.logo {
+  max-height: 3rem;
+  width: auto;
+  object-fit: cover;
+}
+
+.login {
+  width: 7rem;
+  text-align: center;
+}
+
+.icons {
+  display: flex;
+}
+

@@ -1,0 +1,13 @@
+.telaLogin {
+  width: 100%;
+  display: flex;
+  gap: 8rem;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.cadastrarForm, .logarForm {
+  flex: 1
+}
+
