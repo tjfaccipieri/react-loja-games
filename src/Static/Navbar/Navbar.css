@@ -1,5 +1,5 @@
 .navbar{
-  width: 100vw;
+  max-width: 100vw;
   padding: 1rem 0;
   display: flex;
   justify-content: space-around;
@@ -27,5 +27,13 @@
 
 .icons {
   display: flex;
+}
+
+.categoryList {
+  display: flex;
+  list-style: none;
+  width: 1140px;
+  gap: 3rem;
+  justify-content: center;
 }
 

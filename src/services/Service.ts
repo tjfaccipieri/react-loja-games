@@ -20,3 +20,8 @@ export const buscar = async(url: string, setDados: any) => {
   const response = await api.get(url)
   setDados(response.data)
 }
+
+export const buscaId = async(url: string, setDados: any) => {
+  const response = await api.get(url)
+  setDados(response.data)
+}

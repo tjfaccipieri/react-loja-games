@@ -1,5 +1,13 @@
 .listaCards {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.productDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

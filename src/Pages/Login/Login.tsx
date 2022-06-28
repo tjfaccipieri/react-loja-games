@@ -1,16 +1,33 @@
 import { Button, TextField, Typography } from '@material-ui/core';
 
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Usuario from '../../models/Usuario';
 import UsuarioLogin from '../../models/UsuarioLogin';
 import { cadastrarUsuario, login } from '../../services/Service';
+import { addId, addTipo, addToken } from '../../Store/Tokens/actions';
 import './Login.css';
 
 function Login() {
 
+  const dispatch = useDispatch()
+  let history = useHistory()
+
+  const[token, setToken] = useState('')
+
   const [confirmarSenha, setConfirmarSenha] = useState<String>('')
 
   const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({
+    id: 0,
+    nome: '',
+    usuario: '',
+    senha: '',
+    tipo: '',
+    token: '',
+  });
+
+  const [usuarioLoginResp, setUsuarioLoginResp] = useState<UsuarioLogin>({
     id: 0,
     nome: '',
     usuario: '',
@@ -25,6 +42,19 @@ function Login() {
       [event.target.name]: event.target.value,
     });
   }
+
+  useEffect(() => {
+    dispatch(addToken(token))
+  }, [token])
+
+  useEffect(() => {
+    if(usuarioLoginResp.token !== ''){
+      dispatch(addToken(usuarioLoginResp.token))
+      dispatch(addTipo(usuarioLoginResp.tipo))
+      dispatch(addId(usuarioLoginResp.id.toString()))
+      history.push('/')
+    }
+  }, [usuarioLoginResp.token])
 
   const [usuario, setUsuario] = useState<Usuario>({
     id: 0,
@@ -51,14 +81,8 @@ function Login() {
     event.preventDefault();
 
     try {
-      await login(`/usuarios/logar`, usuarioLogin, setUsuarioLogin);
+      await login(`/usuarios/logar`, usuarioLogin, setUsuarioLoginResp);
       alert('foi');
-      console.log(usuarioLogin);
-      setUsuarioLogin({
-        ...usuarioLogin,
-        usuario: '',
-        senha: ''
-      })
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +94,6 @@ function Login() {
     try {
       await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario)
       alert('cadastrou')
-      console.log(usuario)
     } catch (error) {
       console.log(error)
     }

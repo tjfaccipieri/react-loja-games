@@ -9,8 +9,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Produto from '../../models/Produto';
 import { buscar } from '../../services/Service';
+import { DataState } from '../../Store/Tokens/dataReducer';
 import './CardProduto.css';
 
 const useStyles = makeStyles({
@@ -18,7 +21,9 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: 350,
+    objectFit: 'contain',
+    width: 'auto'
   },
 });
 
@@ -27,18 +32,25 @@ function CardProduto() {
 
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
+  const tipo = useSelector<DataState, DataState['tipo']>(
+    (state) => state.tipo
+  )
+
   async function getProdutos() {
     await buscar(`/produtos/all`, setProdutos);
   }
 
   useEffect(() => {
     getProdutos();
+    if(tipo !== '') {
+      console.log(tipo)
+    }
   }, [produtos.length]);
 
   return (
-    <div className='listaCards'>
+    <div className="listaCards">
       {produtos.map((produto) => (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={produto.id}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
@@ -49,19 +61,24 @@ function CardProduto() {
               <Typography gutterBottom variant="h5" component="h2">
                 {produto.nome}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className="productDescription"
+              >
+                {produto.descricao}
               </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
-              Share
-            </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
+            <Link to={`/produto/${produto.id}`}>
+              <Button size="small" color="primary" variant="contained">
+                Ver mais
+              </Button>
+            </Link>
+
+            {}
           </CardActions>
         </Card>
       ))}
