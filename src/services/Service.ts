@@ -15,3 +15,8 @@ export const cadastrarUsuario = async(url: string, dados: Usuario, setDados: any
   const response = await api.post(url, dados);
   setDados(response.data)
 }
+
+export const buscar = async(url: string, setDados: any) => {
+  const response = await api.get(url)
+  setDados(response.data)
+}
