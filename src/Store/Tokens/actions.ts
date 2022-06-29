@@ -24,8 +24,8 @@ export type Teste = {
     id: string;
     nome: string;
     tipo: string;
-    usuario: string;
     token: string;
+    usuario: string;
   };
 };
 

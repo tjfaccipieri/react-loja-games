@@ -7,6 +7,7 @@ import Home from './Pages/Home/Home';
 import DetalhesProduto from './Components/detalhesProduto/DetalhesProduto';
 import { Provider } from 'react-redux';
 import store from './Store/store';
+import CadastroProduto from './Components/CadastroProduto/CadastroProduto';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
               </Route>
               <Route exact path="/produto/:id">
                 <DetalhesProduto />
+              </Route>
+              <Route path="/cadastrarProduto">
+                <CadastroProduto />
               </Route>
             </div>
           </Switch>

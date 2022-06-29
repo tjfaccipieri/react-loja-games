@@ -37,3 +37,15 @@
   justify-content: center;
 }
 
+.linkLogin {
+  text-decoration: underline;
+  color: #7acdee;
+  cursor: pointer;
+}
+
+.menuLogado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

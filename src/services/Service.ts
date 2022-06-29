@@ -1,4 +1,5 @@
 import axios from "axios";
+import Produto from "../models/Produto";
 import Usuario from "../models/Usuario";
 import UsuarioLogin from "../models/UsuarioLogin";
 
@@ -23,5 +24,15 @@ export const buscar = async(url: string, setDados: any) => {
 
 export const buscaId = async(url: string, setDados: any) => {
   const response = await api.get(url)
+  setDados(response.data)
+}
+
+export const buscaIdToken = async(url: string, setDados: any, header: any) => {
+  const response = await api.get(url, header)
+  setDados(response.data)
+}
+
+export const cadastrarProduto = async(url: string, dados:Produto, setDados: any, header: any ) => {
+  const response = await api.post(url, dados, header)
   setDados(response.data)
 }

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import Usuario from '../../models/Usuario';
 import UsuarioLogin from '../../models/UsuarioLogin';
 import { cadastrarUsuario, login } from '../../services/Service';
-import { addId, addTipo, addToken } from '../../Store/Tokens/actions';
+import { addId, addLogin, addTipo, addToken } from '../../Store/Tokens/actions';
 import './Login.css';
 
 function Login() {
@@ -49,9 +49,8 @@ function Login() {
 
   useEffect(() => {
     if(usuarioLoginResp.token !== ''){
-      dispatch(addToken(usuarioLoginResp.token))
-      dispatch(addTipo(usuarioLoginResp.tipo))
       dispatch(addId(usuarioLoginResp.id.toString()))
+      dispatch(addToken(usuarioLoginResp.token))
       history.push('/')
     }
   }, [usuarioLoginResp.token])

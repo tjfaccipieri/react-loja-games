@@ -37,7 +37,7 @@ function DetalhesProduto() {
       <div className='superiorCard'>
         <img src={produto?.foto} alt={produto?.nome} />
         <div className='superiorCard__Info'>
-          <p>Plataforma: {produto?.categoria?.tipo}</p>
+          <strong>Plataforma: {produto?.categoria?.tipo}</strong>
           <h2>Valor: {numberFormat(produto?.preco)}</h2>
         </div>
       </div>

@@ -5,9 +5,20 @@
   margin-top: 1rem;
 }
 
+.titleDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .productDescription {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.cardActions {
+  display: block !important;
 }

@@ -13,9 +13,11 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import { Link } from 'react-router-dom';
 import Categoria from '../../models/Categoria';
-import { buscar } from '../../services/Service';
-import { useSelector } from 'react-redux';
+import { buscaIdToken, buscar } from '../../services/Service';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataState, TesteState } from '../../Store/Tokens/dataReducer';
+import Usuario from '../../models/Usuario';
+import { addId, addToken } from '../../Store/Tokens/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,12 +44,22 @@ const useStyles = makeStyles((theme: Theme) =>
 function Navbar() {
   const classes = useStyles();
 
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const dispatch = useDispatch();
 
-  const tipo = useSelector<TesteState, TesteState['tipo']>(
-    (state) => state.tipo
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [usuario, setUsuario] = useState<Usuario>({
+    id: 0,
+    dataNascimento: '',
+    nome: '',
+    senha: '',
+    usuario: '',
+    tipo: '',
+  });
+
+  const id = useSelector<DataState, DataState['id']>((state) => state.id);
+  const token = useSelector<DataState, DataState['token']>(
+    (state) => state.token
   );
-  const id = useSelector<TesteState, TesteState['id']>((state) => state.id);
 
   async function getCategorias() {
     await buscar(`/categorias`, setCategorias);
@@ -56,6 +68,23 @@ function Navbar() {
   useEffect(() => {
     getCategorias();
   }, [categorias.length]);
+
+  useEffect(() => {
+    getUserById(id);
+  }, [token]);
+
+  async function getUserById(id: string) {
+    await buscaIdToken(`/usuarios/${id}`, setUsuario, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  }
+
+  function logout() {
+    dispatch(addId(''));
+    dispatch(addToken(''));
+  }
 
   return (
     <>
@@ -82,11 +111,30 @@ function Navbar() {
         {id === '' ? (
           <div className="login">
             Faça
-            <Link to={'/login'}> login </Link> ou
-            <Link to={'/login'}> cadastre-se</Link>
+            <Link to={'/login'} className="linkLogin">
+              {' '}
+              login{' '}
+            </Link>{' '}
+            ou
+            <Link to={'/login'} className="linkLogin">
+              {' '}
+              cadastre-se
+            </Link>
           </div>
         ) : (
-          <p>ta logado como {tipo}</p>
+          <div className="menuLogado">
+            <p>Bem vindo {usuario.nome}</p>
+            {usuario.tipo == 'admin' ? (
+              
+                <Link to="/cadastrarProduto" className="linkLogin">
+                  Cadastrar produtos
+                </Link>
+              
+            ) : (
+              ''
+            )}
+            <p onClick={logout} className='linkLogin'>Sair</p>
+          </div>
         )}
 
         <div className="icons">
