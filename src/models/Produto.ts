@@ -6,7 +6,7 @@ interface Produto {
   nome: string;
   preco: number;
   publisher: string;
-  quantidade: number;
+  quantidade?: number;
   tipo: string;
   foto: string;
   estilo: string;
@@ -14,7 +14,7 @@ interface Produto {
   dataLancamento: string;
   curtidos: number;
   categoria: Categoria | null;
-  usuario: Usuario;
+  usuario: Usuario | null;
 }
 
 export default Produto

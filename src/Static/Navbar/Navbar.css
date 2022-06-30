@@ -3,7 +3,7 @@
   padding: 1rem 0;
   display: flex;
   justify-content: space-around;
-  color: #fff
+  color: #fff;
 }
 
 .fundoPreto {
@@ -32,7 +32,7 @@
 .categoryList {
   display: flex;
   list-style: none;
-  width: 1140px;
+  width: 100%;
   gap: 3rem;
   justify-content: center;
 }
@@ -48,4 +48,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.icones{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: #151413;
+  font-weight: 700;
 }

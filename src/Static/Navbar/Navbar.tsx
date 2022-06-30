@@ -146,7 +146,10 @@ function Navbar() {
       <div className="navbar blue">
         <ul className="categoryList">
           {categorias.map((categoria) => (
-            <li key={categoria.id}>{categoria.tipo}</li>
+            <li key={categoria.id} className='icones'>
+              <img src={categoria.foto} alt="" width='25' />
+              <span>{categoria.tipo}</span>
+              </li>
           ))}
         </ul>
       </div>
