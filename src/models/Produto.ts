@@ -4,9 +4,9 @@ import Usuario from "./Usuario";
 interface Produto {
   id: number;
   nome: string;
-  preco: number;
+  preco?: number | null;
   publisher: string;
-  quantidade?: number;
+  quantidade: number;
   tipo: string;
   foto: string;
   estilo: string;

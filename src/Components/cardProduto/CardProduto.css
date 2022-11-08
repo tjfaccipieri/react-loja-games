@@ -22,3 +22,9 @@
 .cardActions {
   display: block !important;
 }
+
+.fotinho {
+  width: 20vw;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}

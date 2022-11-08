@@ -18,10 +18,10 @@ import './CardProduto.css';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 350,
   },
   media: {
-    height: 350,
+    height: 250,
     objectFit: 'contain',
     width: 'auto',
   },
@@ -67,6 +67,22 @@ function CardProduto() {
                   className="productDescription"
                 >
                   {produto.descricao}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className="productDescription"
+                >
+                  R${produto.preco}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className="productDescription"
+                >
+                  Quantidade em estoque: {produto.quantidade}
                 </Typography>
               </CardContent>
               </Link>

@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import Categoria from '../../models/Categoria';
 import Produto from '../../models/Produto';
 import Usuario from '../../models/Usuario';
+import {Estilos} from '../../models/utils/Estilos';
 import { buscaId, buscar, cadastrarProduto } from '../../services/Service';
 import { DataState } from '../../Store/Tokens/dataReducer';
 import './CadastroProduto.css';
@@ -27,6 +28,10 @@ function CadastroProduto() {
     (state) => state.token
   );
 
+  const estilos = Estilos
+
+  const [estiloJogo, setEstiloJogo] = useState('')
+
   const [usuario, setUsuario] = useState<Usuario>({
     id: +idUsuario,
     dataNascimento: '',
@@ -37,6 +42,17 @@ function CadastroProduto() {
   });
 
   const [categorias, setCategorias] = useState<Categoria[]>([]);
+
+  const [tipos, setTipos] = useState([
+    {
+      value: 'jogos'
+    },
+    {
+      value: 'acessorios',
+    }
+  ])
+
+  const [tipo, setTipo] = useState<typeof tipos>()
 
   const [categoria, setCategoria] = useState<Categoria>({
     id: 0,
@@ -56,7 +72,8 @@ function CadastroProduto() {
   const [prod, setProd] = useState<Produto>({
     id: 0,
     nome: '',
-    preco: 0,
+    preco: null,
+    quantidade: 0,
     publisher: '',
     tipo: '',
     foto: '',
@@ -72,7 +89,15 @@ function CadastroProduto() {
     setProd({
       ...prod,
       [event.target.name]: event.target.value,
+      estilo: estiloJogo
     });
+  }
+
+  function handleTipo(event: ChangeEvent<HTMLSelectElement>) {
+    setProd({
+      ...prod,
+      tipo: event.target.value
+    })
   }
 
   useEffect(() => {
@@ -80,17 +105,24 @@ function CadastroProduto() {
       ...prod,
       categoria: categoria,
       usuario: usuario,
+      
     });
+    console.log(prod)
   }, [categoria]);
 
   function handleCadastrarProduto(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    cadastrarProduto(`/produtos`, prod, setProd, {
-      headers: {
-        Authorization: token,
-      },
-    });
-    alert('Produto cadastrado');
+    try {
+      console.log(prod)
+      // cadastrarProduto(`/produtos`, prod, setProd, {
+      //   headers: {
+      //     Authorization: token,
+      //   },
+      // });
+      alert('Produto cadastrado');
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -144,9 +176,13 @@ function CadastroProduto() {
           <Select
             labelId="tipo-label"
             id="tipo"
+            
           >
-            <MenuItem value="jogo">Jogo</MenuItem>
-            <MenuItem value="esportes">Acessório</MenuItem>
+            {tipos.map((tipo)=> (
+              <MenuItem value={tipo.value}>{tipo.value}</MenuItem>
+            ))}
+            
+
           </Select>
         </FormControl>
         <div className="dois">
@@ -185,7 +221,7 @@ function CadastroProduto() {
           variant="outlined"
           size="small"
           multiline
-          rows={5}
+          minRows={5}
           fullWidth
           value={prod.descricao}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -195,8 +231,11 @@ function CadastroProduto() {
         <FormControl fullWidth size="small" margin="normal" variant="outlined">
           <InputLabel id="estilo-label">Estilo</InputLabel>
           <Select labelId="estilo-label" id="estilo">
-            <MenuItem value="rpg">RPG</MenuItem>
-            <MenuItem value="esportes">Esportes</MenuItem>
+            {estilos.map((estilo) => (
+              <MenuItem value={estilo.value} onChange={(event) => {
+                setEstiloJogo(estilo.value)
+              }}>{estilo.label}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
